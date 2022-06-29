@@ -1,6 +1,5 @@
 [gd_scene load_steps=14 format=2]
 
-[ext_resource path="res://sprites/killingdisc_mask1-sheet.png" type="Texture" id=1]
 [ext_resource path="res://scripts/killingdisc.gd" type="Script" id=2]
 [ext_resource path="res://sprites/killingdisc1-sheet.png" type="Texture" id=5]
 
@@ -17,20 +16,16 @@ void fragment()
 	vec4 current_color = texture(TEXTURE,UV); // what's our current sprite pixel
 	vec4 emission_color = texture(emission_teture,UV); // what's our current emission pixel
 	
-	if(emission_color.r > 0f) // check if we're not black in the emission color.
-	{
-		COLOR = (emission_color + glow_color) // add brightness corrosponding with the emission pixel
-	}
-	else
-	{
-		COLOR = current_color; // we arent over an emission pixel leave alone
-	}
+	COLOR = current_color + (emission_color * glow_color) * float(emission_color.r > .0f); // add brightness corrosponding with the emission pixel
 }"
+
+[sub_resource type="StreamTexture" id=15]
+load_path = "res://.import/killingdisc_mask1-sheet.png-53cb8da4363b2f755d5c269ade520cd5.stex"
 
 [sub_resource type="ShaderMaterial" id=9]
 shader = SubResource( 8 )
-shader_param/glow_color = Color( 0.792157, 0.0666667, 0.945098, 1 )
-shader_param/emission_teture = ExtResource( 1 )
+shader_param/glow_color = Color( 1, 1, 1, 1 )
+shader_param/emission_teture = SubResource( 15 )
 
 [sub_resource type="AtlasTexture" id=10]
 atlas = ExtResource( 5 )
@@ -79,7 +74,7 @@ one_way_collision_margin = 0.0
 [node name="sprite" type="AnimatedSprite" parent="."]
 material = SubResource( 9 )
 frames = SubResource( 7 )
-frame = 1
+frame = 3
 playing = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]

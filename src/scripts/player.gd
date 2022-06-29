@@ -14,6 +14,9 @@ var fake_attack_ttl = 0
 var killingdisc = null
 var punching = 0
 var animationdelay = 0
+var saturate = 0
+var saturate_dir = 1
+var has_disc = false
 
 func punch_collider_disabled(val):
 	$puncho/collider.disabled = val
@@ -30,13 +33,22 @@ func CameraDefault():
 
 func _ready():
 	punch_collider_disabled(true)
-	
 	killingdisc = get_node("killingdisc")
+	if !has_disc:
+		killingdisc.set_physics_process(false)
+		killingdisc.visible = false
 	
-func punch():
+func set_disc():
+	has_disc = true
+	killingdisc.set_physics_process(true)
+	killingdisc.visible = true
+	
+func punch(kdisc):
 	animationdelay = 0.5
 	punching = 0.1
 	if Input.is_action_pressed("move_up"):
+		kdisc.punched_up()
+		$player_sprite.animation = "attacking_up"
 		var add = 0
 		if killingdisc.amplitude_x != 0:
 			add = killingdisc.amplitude_x
@@ -44,6 +56,8 @@ func punch():
 		killingdisc.amplitude_y += 60 + add
 		killingdisc.amplitude_y = min(killingdisc.amplitude_y, max_amplitude)
 	else:
+		kdisc.punched()
+		$player_sprite.animation = "attacking"
 		var add = 0
 		if killingdisc.amplitude_y != 0:
 			add = killingdisc.amplitude_y
@@ -52,6 +66,8 @@ func punch():
 		killingdisc.amplitude_x = min(killingdisc.amplitude_x, max_amplitude)
 		
 func _physics_process(delta):
+
+	
 	var moving = false
 	vspeed.y += gravity
 	
@@ -86,20 +102,26 @@ func _physics_process(delta):
 			fake_attack = true
 			fake_attack_ttl = 0
 	
-	if (!attacking or ! is_on_floor()) and Input.is_action_pressed("move_left"):
-		position.x -= player_speed * delta
-		$puncho.set_scale(Vector2(-1, 1))
-		$uppuncho.set_scale(Vector2(-1, 1))
-		$player_sprite.set_scale(Vector2(-1, 1))
-		face = -1
-		moving = true
+	if (!attacking or !is_on_floor()) and Input.is_action_pressed("move_left"):
+		if animationdelay > 0 and is_on_floor():
+			pass 
+		else:
+			position.x -= player_speed * delta
+			$puncho.set_scale(Vector2(-1, 1))
+			$uppuncho.set_scale(Vector2(-1, 1))
+			$player_sprite.set_scale(Vector2(-1, 1))
+			face = -1
+			moving = true
 	elif (!attacking or ! is_on_floor()) and Input.is_action_pressed("move_right"):
-		position.x += player_speed * delta
-		$puncho.set_scale(Vector2(1, 1))
-		$uppuncho.set_scale(Vector2(1, 1))
-		$player_sprite.set_scale(Vector2(1, 1))
-		face = 1
-		moving = true
+		if animationdelay > 0 and is_on_floor():
+			pass 
+		else:
+			position.x += player_speed * delta
+			$puncho.set_scale(Vector2(1, 1))
+			$uppuncho.set_scale(Vector2(1, 1))
+			$player_sprite.set_scale(Vector2(1, 1))
+			face = 1
+			moving = true
 		
 	if jumping and is_on_floor():
 		jumping = false
@@ -107,7 +129,6 @@ func _physics_process(delta):
 	if is_on_floor() and Input.is_action_pressed("jump"):
 		jumping = true
 		vspeed.y = -player_jump_speed
-	
 	
 	if animationdelay <= 0:
 		if jumping and !attacking:
@@ -126,6 +147,10 @@ func _physics_process(delta):
 	
 	vspeed = move_and_slide(vspeed, Vector2.UP)
 	
+	saturate = killingdisc.amplitude_x + killingdisc.amplitude_y
+	saturate = saturate / 10
+	
+	
 	if punching <= 0:
 		if moving:
 			killingdisc.amplitude_x = lerp(killingdisc.amplitude_x, 50, 0.1)
@@ -134,11 +159,45 @@ func _physics_process(delta):
 
 		if killingdisc.amplitude_y != 0:
 			killingdisc.amplitude_y = lerp(killingdisc.amplitude_y, 0, 0.01)
+			
+	update()
 
 func _draw():
-	pass
-	#draw_line(Vector2(12 * face, -5), fist.position,  Color(255, 255, 255), 1)
+	if has_disc:
+		var xx
+		var yy
+		var last_x
+		var last_y
+		var amount
+		var dir
+		var argument0 = Vector2(0, 0).x
+		var argument1 = Vector2(0, 0).y + killingdisc.base_y
+		var argument2 = killingdisc.position.x
+		var argument3 = killingdisc.position.y
+		var argument5 = 10
+		var argument6 = 6
+		var argument7 = 12
 
+		xx = argument0
+		yy = argument1
+		last_x = argument0
+		last_y = argument1
+		dir = Vector2(xx, yy).angle_to_point(Vector2(argument2,argument3))
+
+		for i in range(((Vector2(xx, yy).distance_to(Vector2(argument2,argument3))) / argument5) + 5):
+			dir = Vector2(xx, yy).angle_to_point(Vector2(argument2,argument3))
+			xx += cos(dir) * argument5 * -1
+			yy -= sin(dir) * argument5
+			
+			amount = argument6-rand_range(0, argument7)
+			xx += cos(dir - 90) * amount
+			yy -= sin(dir - 90) * amount
+			draw_line(Vector2(xx,yy),Vector2(last_x,last_y), Color(saturate, saturate, saturate), 1)
+			last_x = xx
+			last_y = yy
+		
 func _on_puncho_area_entered(area):
-	if area.name == "killingdisc":
-		punch()
+	if has_disc:
+		if punching <= 0:
+			if area.name == "killingdisc":
+				punch(area)

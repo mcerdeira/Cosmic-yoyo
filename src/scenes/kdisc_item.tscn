@@ -1,0 +1,67 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://sprites/killingdisc1-sheet.png" type="Texture" id=1]
+[ext_resource path="res://sprites/killingdisc_mask1-sheet.png" type="Texture" id=2]
+[ext_resource path="res://scripts/kdisc_item.gd" type="Script" id=3]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 15.0333
+
+[sub_resource type="Shader" id=8]
+code = "shader_type canvas_item;
+uniform sampler2D emission_teture;
+uniform vec4 glow_color : hint_color = vec4(1.0);
+
+void fragment()
+{
+	vec4 current_color = texture(TEXTURE,UV); // what's our current sprite pixel
+	vec4 emission_color = texture(emission_teture,UV); // what's our current emission pixel
+	
+	COLOR = current_color + (emission_color * glow_color) * float(emission_color.r > .0f); // add brightness corrosponding with the emission pixel
+}"
+
+[sub_resource type="ShaderMaterial" id=9]
+shader = SubResource( 8 )
+shader_param/glow_color = Color( 1, 1, 1, 1 )
+shader_param/emission_teture = ExtResource( 2 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 22, 22 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 1 )
+region = Rect2( 22, 0, 22, 22 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 1 )
+region = Rect2( 44, 0, 22, 22 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 1 )
+region = Rect2( 66, 0, 22, 22 )
+
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 1 )
+region = Rect2( 88, 0, 22, 22 )
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[node name="killdisc_item" type="Area2D"]
+script = ExtResource( 3 )
+
+[node name="collider" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="sprite" type="AnimatedSprite" parent="."]
+material = SubResource( 9 )
+frames = SubResource( 2 )
+playing = true
+
+[connection signal="body_entered" from="." to="." method="_on_killdisc_item_body_entered"]

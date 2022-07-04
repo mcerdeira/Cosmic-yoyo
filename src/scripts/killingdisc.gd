@@ -8,6 +8,7 @@ var amplitude_y = 0
 var base_x = 0
 var base_y = -15
 var player = null
+var prev_y = 0
 var prev_x = 0
 
 func _ready():
@@ -26,15 +27,20 @@ func punched():
 			total_time_x = 59
 
 func punched_up():
-	pass
+	if prev_y < position.y:
+		position.y = -15
+		total_time_y = 30
 
 func _physics_process(delta):
 	prev_x = position.x
+	prev_y = position.y
+	
 	position.x = (base_x * player.face) + (cos(total_time_x) * amplitude_x)
-
 	total_time_x += speed * delta
 
 	position.y = base_y + sin(total_time_y) * amplitude_y
 	total_time_y += speed * delta
+	
+	
 
 	$sprite.rotation_degrees += 1000 * delta

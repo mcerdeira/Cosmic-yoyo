@@ -3,7 +3,7 @@ extends KinematicBody2D
 export var gravity = 7
 var vspeed = Vector2.ZERO
 var face = 1
-export var player_speed = 150
+export var player_speed = 100
 export var player_jump_speed = 250
 var max_amplitude = 200
 var jumping = false

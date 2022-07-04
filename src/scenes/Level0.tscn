@@ -137,3 +137,13 @@ tile_data = PoolIntArray( 327733, 0, 0, 327734, 0, 131074, 458731, 0, 0, 458732,
 
 [node name="killdisc_item" parent="." instance=ExtResource( 3 )]
 position = Vector2( 864, 67 )
+
+[node name="enemy2" parent="." instance=ExtResource( 4 )]
+position = Vector2( 243, 19 )
+enemytype = "flyer"
+face = -1
+
+[node name="enemy3" parent="." instance=ExtResource( 4 )]
+position = Vector2( 323, 34 )
+enemytype = "flyer"
+face = -1

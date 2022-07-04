@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/wall_spr_1.png-4fb9fcf096cbea6f82700dac6d1471bc.stex"
+path="res://.import/enemy_bullet_one1.png-c10ba3dc6e94f0627cafa92324c50980.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/wall_spr_1.png"
-dest_files=[ "res://.import/wall_spr_1.png-4fb9fcf096cbea6f82700dac6d1471bc.stex" ]
+source_file="res://sprites/enemy_bullet_one1.png"
+dest_files=[ "res://.import/enemy_bullet_one1.png-c10ba3dc6e94f0627cafa92324c50980.stex" ]
 
 [params]
 

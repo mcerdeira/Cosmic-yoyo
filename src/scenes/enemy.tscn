@@ -1,8 +1,10 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://scripts/enemy.gd" type="Script" id=1]
 [ext_resource path="res://sprites/enemy_walker2.png" type="Texture" id=2]
 [ext_resource path="res://sprites/enemy_walker1.png" type="Texture" id=3]
+[ext_resource path="res://sprites/enemy_flyier2.png" type="Texture" id=4]
+[ext_resource path="res://sprites/enemy_flyier1.png" type="Texture" id=5]
 
 [sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 8, 8.5 )
@@ -12,6 +14,11 @@ animations = [ {
 "frames": [ ExtResource( 3 ), ExtResource( 2 ) ],
 "loop": true,
 "name": "walker",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 5 ), ExtResource( 4 ) ],
+"loop": true,
+"name": "flyer",
 "speed": 5.0
 } ]
 
@@ -26,4 +33,8 @@ shape = SubResource( 3 )
 frames = SubResource( 2 )
 animation = "walker"
 
+[node name="visinot" type="VisibilityNotifier2D" parent="."]
+
 [connection signal="area_entered" from="." to="." method="_on_enemy_area_entered"]
+[connection signal="screen_entered" from="visinot" to="." method="_on_visinot_screen_entered"]
+[connection signal="screen_exited" from="visinot" to="." method="_on_visinot_screen_exited"]

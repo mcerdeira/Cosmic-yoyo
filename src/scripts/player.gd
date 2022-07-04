@@ -30,8 +30,12 @@ func CameraShakeValue(delta, value):
 
 func CameraDefault():
 	$Camera2D.default()
+	
+func hurt():
+	pass
 
 func _ready():
+	add_to_group("player")
 	punch_collider_disabled(true)
 	killingdisc = get_node("killingdisc")
 	if !has_disc:

@@ -38,3 +38,4 @@ animation = "walker"
 [connection signal="area_entered" from="." to="." method="_on_enemy_area_entered"]
 [connection signal="screen_entered" from="visinot" to="." method="_on_visinot_screen_entered"]
 [connection signal="screen_exited" from="visinot" to="." method="_on_visinot_screen_exited"]
+[connection signal="viewport_entered" from="visinot" to="." method="_on_visinot_viewport_entered"]

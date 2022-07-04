@@ -3,10 +3,13 @@ export var enemytype = ""
 export var face = 1
 var bullet = preload("res://scenes/enemy_bullet.tscn")
 var speed = 20
+var yspeed = 5
 var shoot_delay_total = 5
 var shoot_delay = shoot_delay_total
 var player = null
 var process = false
+var total_time_y = 0
+var amplitude_y = 5
 
 func _ready():
 	$sprite.animation = enemytype
@@ -24,6 +27,10 @@ func _physics_process_walker(delta):
 	position.x += speed * face * delta
 	
 func _physics_process_flyer(delta):	
+	position.x += speed * face * delta
+	position.y = sin(total_time_y) * amplitude_y
+	total_time_y += yspeed * delta
+	
 	player = get_tree().get_nodes_in_group("player")[0]
 	if player.position.x > position.x:
 		face = 1

@@ -26,6 +26,11 @@ animations = [ {
 "name": "attacking_up",
 "speed": 5.0
 }, {
+"frames": [ ExtResource( 2 ), ExtResource( 4 ), ExtResource( 7 ), ExtResource( 1 ), ExtResource( 5 ), ExtResource( 6 ) ],
+"loop": true,
+"name": "walking",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 9 ) ],
 "loop": true,
 "name": "attacking",
@@ -34,11 +39,6 @@ animations = [ {
 "frames": [ ExtResource( 8 ) ],
 "loop": true,
 "name": "jumping",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 2 ), ExtResource( 4 ), ExtResource( 7 ), ExtResource( 1 ), ExtResource( 5 ), ExtResource( 6 ) ],
-"loop": true,
-"name": "walking",
 "speed": 5.0
 } ]
 

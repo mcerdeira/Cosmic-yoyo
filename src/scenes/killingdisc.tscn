@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://scripts/killingdisc.gd" type="Script" id=2]
 [ext_resource path="res://sprites/killingdisc1-sheet.png" type="Texture" id=5]
@@ -55,14 +55,6 @@ animations = [ {
 "speed": 10.0
 } ]
 
-[sub_resource type="Environment" id=6]
-background_mode = 4
-glow_enabled = true
-glow_intensity = 3.36
-glow_strength = 0.58
-glow_blend_mode = 0
-glow_hdr_threshold = 0.6
-
 [node name="killingdisc" type="Area2D"]
 script = ExtResource( 2 )
 
@@ -74,10 +66,6 @@ one_way_collision_margin = 0.0
 [node name="sprite" type="AnimatedSprite" parent="."]
 material = SubResource( 9 )
 frames = SubResource( 7 )
-frame = 3
 playing = true
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource( 6 )
 
 [connection signal="body_entered" from="." to="." method="_on_killingdisc_body_entered"]

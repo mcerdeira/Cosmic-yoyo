@@ -17,6 +17,9 @@ var animationdelay = 0
 var saturate = 0
 var saturate_dir = 1
 var has_disc = false
+var enter_car_ttl = 0
+var enter_car_flag = false
+var car = null
 
 func punch_collider_disabled(val):
 	$puncho/collider.disabled = val
@@ -33,6 +36,13 @@ func CameraDefault():
 	
 func hurt():
 	pass
+	
+func enter_car(_car):
+	car = _car
+	$player_sprite.animation = "default"
+	$player_sprite.playing = false 
+	enter_car_flag = true
+	enter_car_ttl = 0.6
 
 func _ready():
 	add_to_group("player")
@@ -70,7 +80,13 @@ func punch(kdisc):
 		killingdisc.amplitude_x = min(killingdisc.amplitude_x, max_amplitude)
 		
 func _physics_process(delta):
-
+	if enter_car_flag:
+		enter_car_ttl -= 1 * delta
+		if visible and enter_car_ttl <= 0:
+			visible = false
+			car.start()
+			
+		return 0
 	
 	var moving = false
 	vspeed.y += gravity

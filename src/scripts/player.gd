@@ -20,6 +20,7 @@ var has_disc = false
 var enter_car_ttl = 0
 var enter_car_flag = false
 var car = null
+export var canjump = true
 
 func punch_collider_disabled(val):
 	$puncho/collider.disabled = val
@@ -43,8 +44,11 @@ func enter_car(_car):
 	$player_sprite.playing = false 
 	enter_car_flag = true
 	enter_car_ttl = 0.6
+	
+func setCamera(on):
+	$Camera2D.current = on
 
-func _ready():
+func _ready():	
 	add_to_group("player")
 	punch_collider_disabled(true)
 	killingdisc = get_node("killingdisc")
@@ -146,7 +150,7 @@ func _physics_process(delta):
 	if jumping and is_on_floor():
 		jumping = false
 	
-	if is_on_floor() and Input.is_action_pressed("jump"):
+	if canjump and is_on_floor() and Input.is_action_pressed("jump"):
 		jumping = true
 		vspeed.y = -player_jump_speed
 	
@@ -169,7 +173,6 @@ func _physics_process(delta):
 	
 	saturate = killingdisc.amplitude_x + killingdisc.amplitude_y
 	saturate = saturate / 10
-	
 	
 	if punching <= 0:
 		if moving:

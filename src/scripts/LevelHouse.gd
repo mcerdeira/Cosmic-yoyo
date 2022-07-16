@@ -14,6 +14,11 @@ func _physics_process(delta):
 		alpha -= 1 * delta
 		if alpha <= 0:
 			finished = true
+			if $AnimationPlayer:
+				$AnimationPlayer.play("labels")
 
 func notify_levelend():
 	get_parent().notify_levelend()
+
+func _on_AnimationPlayer_animation_finished(anim_name):
+	get_node("car").scape()

@@ -3,6 +3,9 @@ var currentscn = null
 
 var menu = preload("res://scenes/Menu.tscn")
 var house = preload("res://scenes/LevelHouse.tscn")
+var driving = preload("res://scenes/LevelDriving.tscn")
+var arriving = null
+
 var level0 = preload("res://scenes/Level0.tscn")
 
 func _ready():
@@ -19,6 +22,10 @@ func add_scene(obj):
 	
 func notify_levelend():
 	if currentscn.name == "LevelHouse":
+		add_scene(driving)
+	elif currentscn.name == "LevelDriving":
+		add_scene(arriving)
+	elif currentscn.name == "LevelArriving":
 		add_scene(level0)
 		
 func _input(event):

@@ -1,0 +1,51 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://scenes/3dcharacter.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/3Dfloor.tscn" type="PackedScene" id=2]
+
+[sub_resource type="Environment" id=1]
+background_mode = 1
+background_color = Color( 1, 0.937255, 0.72549, 1 )
+background_energy = 0.0
+fog_color = Color( 0.00392157, 0.00392157, 0.00392157, 1 )
+glow_enabled = true
+glow_intensity = 2.2
+glow_strength = 0.7
+glow_blend_mode = 0
+
+[node name="3dMiniGame" type="Spatial"]
+
+[node name="character" parent="." instance=ExtResource( 1 )]
+transform = Transform( 4.70458, 1.65427, 0.144375, -0.338652, -0.124988, 1.99478, 1.65898, -4.71675, -0.00222362, 0, 63.6881, 19.7639 )
+
+[node name="Camera" type="InterpolatedCamera" parent="character"]
+transform = Transform( 0.0663684, 0.0694138, -0.175434, -0.188667, 0.0241995, -0.0617996, -0.000554137, 0.465001, 0.183777, -73.7872, -24.9804, 52.3518 )
+environment = SubResource( 1 )
+fov = 34.1
+near = 0.88
+far = 7857.5
+speed = 5.0
+enabled = true
+
+[node name="DirectionalLight" type="DirectionalLight" parent="character"]
+transform = Transform( 0.2, 0, 0, 0, 0.162959, 0.11595, 0, -0.11595, 0.162959, 0, 10.223, -3.95278 )
+light_energy = 1.995
+shadow_enabled = true
+shadow_color = Color( 0.501961, 0.376471, 0.376471, 1 )
+shadow_contact = 10.0
+directional_shadow_max_distance = 8192.0
+
+[node name="floor" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.411, 30.316, 20.232 )
+
+[node name="floor5" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 195.445, 30.316, 20.232 )
+
+[node name="floor4" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -192.412, 30.316, 20.232 )
+
+[node name="floor2" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.411, 30.316, 209.399 )
+
+[node name="floor3" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.411, 30.316, -166.363 )

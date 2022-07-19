@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://scenes/3dcharacter.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/3Dfloor.tscn" type="PackedScene" id=2]
@@ -12,6 +12,10 @@ glow_enabled = true
 glow_intensity = 2.2
 glow_strength = 0.7
 glow_blend_mode = 0
+
+[sub_resource type="CylinderShape" id=2]
+
+[sub_resource type="CylinderMesh" id=3]
 
 [node name="3dMiniGame" type="Spatial"]
 
@@ -41,11 +45,33 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.411, 30.316, 20.232 )
 [node name="floor5" parent="." instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 195.445, 30.316, 20.232 )
 
+[node name="floor9" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 195.445, 30.316, -167.588 )
+
+[node name="floor8" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 195.445, 30.316, 211.663 )
+
 [node name="floor4" parent="." instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -192.412, 30.316, 20.232 )
+
+[node name="floor7" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -192.412, 30.316, 208.92 )
+
+[node name="floor6" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -192.412, 30.316, -165.938 )
 
 [node name="floor2" parent="." instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.411, 30.316, 209.399 )
 
 [node name="floor3" parent="." instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.411, 30.316, -166.363 )
+
+[node name="enemy3d" type="KinematicBody" parent="."]
+transform = Transform( 15, 0, 0, 0, 15, 0, 0, 0, 15, 178.133, 69.2787, 166.382 )
+
+[node name="CollisionShape" type="CollisionShape" parent="enemy3d"]
+shape = SubResource( 2 )
+
+[node name="MeshInstance" type="MeshInstance" parent="enemy3d"]
+mesh = SubResource( 3 )
+material/0 = null

@@ -1,0 +1,31 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://sprites/sciencetist1.png" type="Texture" id=1]
+[ext_resource path="res://sprites/sciencetist4.png" type="Texture" id=2]
+[ext_resource path="res://sprites/sciencetist3.png" type="Texture" id=3]
+[ext_resource path="res://sprites/sciencetist2.png" type="Texture" id=4]
+[ext_resource path="res://sprites/sciencetist5.png" type="Texture" id=5]
+[ext_resource path="res://sprites/sciencetist6.png" type="Texture" id=6]
+[ext_resource path="res://sprites/sciencetist7.png" type="Texture" id=7]
+[ext_resource path="res://scripts/scientist.gd" type="Script" id=8]
+
+[sub_resource type="SpriteFrames" id=5]
+animations = [ {
+"frames": [ ExtResource( 1 ) ],
+"loop": true,
+"name": "idle",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 4 ), ExtResource( 3 ), ExtResource( 2 ), ExtResource( 6 ), ExtResource( 5 ), ExtResource( 7 ) ],
+"loop": true,
+"name": "walking",
+"speed": 5.0
+} ]
+
+[node name="scientist" type="KinematicBody2D"]
+script = ExtResource( 8 )
+
+[node name="sprite" type="AnimatedSprite" parent="."]
+position = Vector2( 6, -4 )
+frames = SubResource( 5 )
+animation = "idle"

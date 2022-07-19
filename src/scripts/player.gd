@@ -19,6 +19,7 @@ var saturate_dir = 1
 var has_disc = false
 var enter_car_ttl = 0
 var enter_car_flag = false
+var fake_jump = false
 var car = null
 export var canjump = true
 
@@ -35,8 +36,23 @@ func CameraShakeValue(delta, value):
 func CameraDefault():
 	$Camera2D.default()
 	
+func setCameraSpeed(_speed):
+	$Camera2D.smoothing_speed = _speed
+	
 func hurt():
 	pass
+	
+func exit_car():
+	visible = true
+	enter_car_flag = false
+	enter_car_ttl = 0
+	fake_jump = true
+	
+func car_entered():
+	visible = false
+	enter_car_flag = true
+	enter_car_ttl = -1
+	setCamera(true)
 	
 func enter_car(_car):
 	car = _car
@@ -150,7 +166,8 @@ func _physics_process(delta):
 	if jumping and is_on_floor():
 		jumping = false
 	
-	if canjump and is_on_floor() and Input.is_action_pressed("jump"):
+	if canjump and is_on_floor() and (Input.is_action_pressed("jump") or fake_jump):
+		fake_jump = false
 		jumping = true
 		vspeed.y = -player_jump_speed
 	

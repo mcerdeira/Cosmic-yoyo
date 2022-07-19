@@ -7,6 +7,9 @@ var finished = false
 func _ready():
 	color = get_node("CanvasLayer/ColorRect")
 	color.color = Color(0, 0, 0, alpha)
+	
+func notify_3Dpuzzle():
+	get_parent().notify_3Dpuzzle()
 
 func _physics_process(delta):
 	if !finished:

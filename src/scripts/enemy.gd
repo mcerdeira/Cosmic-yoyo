@@ -63,3 +63,7 @@ func _on_visinot_screen_entered():
 
 func _on_visinot_screen_exited():
 	process = false
+
+func _on_enemy_body_entered(body):
+	if body.name == "player":
+		get_parent().notify_3Dpuzzle()

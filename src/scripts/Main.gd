@@ -6,7 +6,6 @@ var house = preload("res://scenes/LevelHouse.tscn")
 var driving = preload("res://scenes/LevelDriving.tscn")
 var tdmini = preload("res://scenes/3dMiniGame.tscn")
 var arriving = preload("res://scenes/LevelArrive.tscn")
-
 var level0 = preload("res://scenes/Level0.tscn")
 
 func _ready():
@@ -21,12 +20,15 @@ func add_scene(obj):
 	currentscn = m
 	add_child(m)
 	
+func notify_3Dpuzzle():
+	add_scene(tdmini)
+	
 func notify_levelend():
 	if currentscn.name == "LevelHouse":
 		add_scene(driving)
 	elif currentscn.name == "LevelDriving":
 		add_scene(arriving)
-	elif currentscn.name == "LevelArriving":
+	elif currentscn.name == "LevelArrive":
 		add_scene(level0)
 		
 func _input(event):

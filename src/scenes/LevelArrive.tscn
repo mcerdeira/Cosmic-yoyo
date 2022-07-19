@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://sprites/wall_spr_sheet.png" type="Texture" id=1]
 [ext_resource path="res://scenes/player.tscn" type="PackedScene" id=2]
@@ -199,6 +199,9 @@ points = PoolVector2Array( 16, 16, 0, 16, 0, 0, 16, 0 )
 } ]
 1/z_index = 0
 
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 128.75, 56.75 )
+
 [node name="LevelArrive" type="Node2D"]
 script = ExtResource( 5 )
 
@@ -223,7 +226,7 @@ follow_viewport_enable = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = -651.0
-margin_top = -416.0
+margin_top = -829.0
 margin_right = 4579.0
 margin_bottom = 324.0
 color = Color( 0, 0, 0, 0 )
@@ -284,4 +287,11 @@ position = Vector2( 256, 512 )
 [node name="pc7" parent="." instance=ExtResource( 10 )]
 position = Vector2( 306, 144 )
 
+[node name="level_switch" type="Area2D" parent="."]
+
+[node name="collider" type="CollisionShape2D" parent="level_switch"]
+position = Vector2( 1877.25, -456.25 )
+shape = SubResource( 4 )
+
 [connection signal="area_entered" from="car" to="car" method="_on_car_area_entered"]
+[connection signal="body_entered" from="level_switch" to="." method="_on_level_switch_body_entered"]
